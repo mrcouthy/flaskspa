@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}My Flask App{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="d-flex">
+        <aside id="sidePanel" class="collapse collapse-horizontal bg-light p-3 min-vh-100" style="width: 280px;">
+            <div class="input-group mb-3">
+                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="bi bi-house-door"></i> Home
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="#productsSubMenu" data-bs-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-grid"></i> Products</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </a>
+                    <ul class="collapse list-group list-group-flush ps-3" id="productsSubMenu">
+                        <li class="list-group-item"><a href="#" class="list-group-item list-group-item-action"><i class="bi bi-laptop"></i> Electronics</a></li>
+                        <li class="list-group-item"><a href="#" class="list-group-item list-group-item-action"><i class="bi bi-book"></i> Books</a></li>
+                    </ul>
+                </li>
+                <li class="list-group-item">
+                    <a href="#servicesSubMenu" data-bs-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-gear"></i> Services</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </a>
+                    <ul class="collapse list-group list-group-flush ps-3" id="servicesSubMenu">
+                        <li class="list-group-item"><a href="#" class="list-group-item list-group-item-action"><i class="bi bi-tools"></i> Consulting</a></li>
+                        <li class="list-group-item"><a href="#" class="list-group-item list-group-item-action"><i class="bi bi-code-slash"></i> Development</a></li>
+                    </ul>
+                </li>
+                <li class="list-group-item">
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="bi bi-person-lines-fill"></i> Contact
+                    </a>
+                </li>
+            </ul>
+            <!-- Side panel content will go here (placeholder <p> can be removed if menu is sufficient) -->
+            <!-- <p>Side Panel Content</p> -->
+        </aside>
+        <main id="mainContent" class="container-fluid flex-grow-1 p-4">
+            <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidePanel" aria-expanded="true" aria-controls="sidePanel">
+                <i class="bi bi-list"></i> Toggle Panel
+            </button>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
