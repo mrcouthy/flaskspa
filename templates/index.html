@@ -3,7 +3,16 @@
 {% block title %}Homepage - My Flask App{% endblock %}
 
 {% block content %}
-<h1>Welcome to the Main Content Area!</h1>
+{% if current_user %}
+    <h3>Welcome, {{ current_user.username }}!</h3>
+    <p>You have logged in {{ current_user.login_count }} time(s).</p>
+{% else %}
+    <h1>Welcome to the Main Content Area!</h1>
+    <p>Please <a href="{{ url_for('login') }}">log in</a> or <a href="{{ url_for('register') }}">register</a>.</p>
+{% endif %}
+
+<hr> 
+{# The rest of the original content can go here or be removed/modified as needed #}
 <p>This is an example page demonstrating the base layout with the collapsible side panel.</p>
 <p>You can put any page-specific content here.</p>
 <p>Try toggling the side panel using the menu icon button.</p>

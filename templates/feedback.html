@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Submit Feedback - My Flask App{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="mb-4">Submit Your Feedback</h2>
+        <form method="POST" action="{{ url_for('feedback') }}">
+            <div class="mb-3">
+                <label for="feedback_text" class="form-label">Your Feedback</label>
+                <textarea class="form-control" id="feedback_text" name="feedback_text" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

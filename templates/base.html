@@ -15,11 +15,41 @@
                 <span class="input-group-text"><i class="bi bi-search"></i></span>
             </div>
             <ul class="list-group list-group-flush">
+                {% if current_user %}
+                <li class="list-group-item">Logged in as: <strong>{{ current_user.username }}</strong></li>
+                {% endif %}
+
                 <li class="list-group-item">
-                    <a href="#" class="list-group-item list-group-item-action">
+                    <a href="{{ url_for('home') }}" class="list-group-item list-group-item-action">
                         <i class="bi bi-house-door"></i> Home
                     </a>
                 </li>
+
+                {% if current_user %}
+                <li class="list-group-item">
+                    <a href="{{ url_for('feedback') }}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-chat-left-text"></i> Feedback
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{{ url_for('logout') }}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </li>
+                {% else %}
+                <li class="list-group-item">
+                    <a href="{{ url_for('login') }}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{{ url_for('register') }}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-person-plus"></i> Register
+                    </a>
+                </li>
+                {% endif %}
+                <!-- Placeholder links removed -->
+                <!--
                 <li class="list-group-item">
                     <a href="#productsSubMenu" data-bs-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                         <span><i class="bi bi-grid"></i> Products</span>
@@ -45,14 +75,25 @@
                         <i class="bi bi-person-lines-fill"></i> Contact
                     </a>
                 </li>
+                -->
             </ul>
-            <!-- Side panel content will go here (placeholder <p> can be removed if menu is sufficient) -->
-            <!-- <p>Side Panel Content</p> -->
         </aside>
         <main id="mainContent" class="container-fluid flex-grow-1 p-4">
             <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidePanel" aria-expanded="true" aria-controls="sidePanel">
                 <i class="bi bi-list"></i> Toggle Panel
             </button>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category if category else 'info' }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
             {% block content %}{% endblock %}
         </main>
     </div>
