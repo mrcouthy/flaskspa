@@ -2,6 +2,7 @@ from flask import Flask, render_template, flash, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, roles_required, current_user, roles_accepted
 from flask_security.recoverable import send_reset_password_instructions
+from flask_security.utils import uia_email_mapper # Added for new identity attributes
 from flask_mail import Mail
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SelectMultipleField, BooleanField, SubmitField
@@ -27,7 +28,7 @@ app.config['MAIL_DEFAULT_SENDER'] = 'noreply@example.com'
 app.config['SECURITY_PASSWORD_SALT'] = 'super-secret-salt-for-dev' # Replace with a real salt
 app.config['SECURITY_REGISTERABLE'] = False # Disable self-registration
 app.config['SECURITY_SEND_REGISTER_EMAIL'] = False
-app.config['SECURITY_USER_IDENTITY_ATTRIBUTES'] = ['email'] # Use email as username
+app.config['SECURITY_USER_IDENTITY_ATTRIBUTES'] = [{"email": {"mapper": uia_email_mapper, "case_insensitive": True}}]
 app.config['SECURITY_POST_LOGIN_VIEW'] = '/'
 app.config['SECURITY_POST_LOGOUT_VIEW'] = '/'
 app.config['SECURITY_EMAIL_SENDER'] = 'noreply@example.com' # For Flask-Security-Too emails
