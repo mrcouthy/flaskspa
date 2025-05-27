@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Admin Dashboard</h1>
+    <p>Welcome to the Admin Dashboard, {{ current_user.email }}.</p>
+    <ul class="list-group">
+        <li class="list-group-item"><a href="{{ url_for('user_management') }}">User Management</a></li>
+        <li class="list-group-item"><a href="{{ url_for('add_user') }}">Add New User</a></li>
+        <!-- Add more admin links here as needed -->
+    </ul>
+</div>
+{% endblock %}

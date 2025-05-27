@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
-from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, roles_required, current_user
+from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, roles_required, current_user, roles_accepted
 from flask_security.recoverable import send_reset_password_instructions
 from flask_mail import Mail
 from flask_wtf import FlaskForm
@@ -79,6 +79,21 @@ security = Security(app, user_datastore) # Initialize security after models and 
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route('/content_dashboard')
+@roles_accepted('editor', 'admin')
+def content_dashboard():
+    return render_template('content_dashboard.html')
+
+@app.route('/view_content')
+@roles_accepted('viewer', 'editor', 'admin')
+def view_content():
+    return render_template('view_content.html')
+
+@app.route('/admin/dashboard')
+@roles_required('admin')
+def admin_dashboard():
+    return render_template('admin/dashboard.html')
 
 @app.route('/admin/add_user', methods=['GET', 'POST'])
 @roles_required('admin')

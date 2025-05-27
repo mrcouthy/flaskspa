@@ -45,8 +45,27 @@
                         <i class="bi bi-person-lines-fill"></i> Contact
                     </a>
                 </li>
+                {% if current_user.is_authenticated and (current_user.has_role('viewer') or current_user.has_role('editor') or current_user.has_role('admin')) %}
+                <li class="list-group-item">
+                    <a href="{{ url_for('view_content') }}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-eye"></i> View Content
+                    </a>
+                </li>
+                {% endif %}
+                {% if current_user.is_authenticated and (current_user.has_role('editor') or current_user.has_role('admin')) %}
+                <li class="list-group-item">
+                    <a href="{{ url_for('content_dashboard') }}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-pencil-square"></i> Content Dashboard
+                    </a>
+                </li>
+                {% endif %}
                 {% if current_user.is_authenticated and current_user.has_role('admin') %}
                 <li class="list-group-item list-group-item-secondary text-uppercase small pt-2 pb-2 ps-3">Admin Tools</li>
+                <li class="list-group-item">
+                    <a href="{{ url_for('admin_dashboard') }}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-speedometer2"></i> Admin Dashboard
+                    </a>
+                </li>
                 <li class="list-group-item">
                     <a href="{{ url_for('user_management') }}" class="list-group-item list-group-item-action">
                         <i class="bi bi-people"></i> User Management
