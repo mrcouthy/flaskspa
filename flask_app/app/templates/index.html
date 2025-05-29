@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if title %}{{ title }} - {% endif %}Flask SPA</title> {# Allow page title to be set #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {# Any Bootstrap CSS would be included here if not using flask-bootstrap's base template approach #}
+    {# For flask-bootstrap, it usually provides its own base template to extend. #}
+    {# If we are extending our OWN index.html for auth pages, then this index.html needs bootstrap links OR flask-bootstrap handles it. #}
+    {# Given the setup, flask-bootstrap is initialized and its templates are available. #}
+    {# The auth templates extend "index.html" and use bootstrap/wtf.html. This implies index.html itself should be bootstrap-aware or provide necessary blocks. #}
+    {# For simplicity, and since flask-bootstrap is initialized, we assume its CSS is available globally. #}
+</head>
+<body>
+    <div id="sidebar">
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            {% if current_user.is_anonymous %}
+            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+            {% else %}
+            <li>
+                <a href="{{ url_for('auth.logout') }}">
+                    Logout ({{ current_user.username }} 
+                    {% if hasattr(current_user, 'role') and current_user.role %}[{{ current_user.role }}]{% endif %})
+                </a>
+            </li>
+            {% endif %}
+            <li><a href="{{ url_for('sample_module1.hello') }}">Module 1 (User)</a></li>
+            {% if current_user.is_authenticated and hasattr(current_user, 'role') and current_user.role == 'admin' %}
+            <li><a href="{{ url_for('sample_module2.greet') }}">Module 2 (Admin)</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div id="main-content">
+        <button id="sidebarToggle">Toggle Sidebar</button>
+        {# Display flashed messages #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container"> {# Or some other appropriate wrapper #}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> {# Bootstrap 5 close button #}
+                    </div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block page_content %}
+        <h1>Welcome to the Flask SPA</h1>
+        <p>This is the main landing page.</p>
+        {% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {# Bootstrap JS if needed and not handled by flask-bootstrap base template #}
+</body>
+</html>

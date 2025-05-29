@@ -1,0 +1,100 @@
+/* Basic Reset */
+body, h1, ul {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #333;
+    padding-top: 20px;
+    transition: transform 0.3s ease;
+}
+
+#sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+#sidebar ul {
+    list-style-type: none;
+}
+
+#sidebar ul li a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+}
+
+#sidebar ul li a:hover {
+    background-color: #555;
+}
+
+#main-content {
+    margin-left: 250px; /* Default margin when sidebar is open */
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+#main-content.sidebar-collapsed {
+    margin-left: 0;
+}
+
+#sidebarToggle {
+    position: fixed; /* Or absolute, depending on layout needs */
+    top: 10px;
+    left: 10px; /* Initially visible when sidebar is open */
+    z-index: 1000; /* Ensure it's above other content */
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Adjust toggle button position when sidebar is collapsed */
+#main-content.sidebar-collapsed + #sidebar #sidebarToggle {
+    /* This rule might be tricky; consider placing toggle in main-content or dynamically adjusting its position via JS if it's part of the sidebar itself and gets translated out.
+       For simplicity, if the toggle is *always* in main-content or fixed relative to viewport, its position might not need to change based on sidebar state directly in CSS like this.
+       If the button is part of the sidebar, it will move with the sidebar.
+       If it's part of main-content, its position relative to main-content is fixed, but main-content itself moves.
+       Let's assume the button is in main-content as per the HTML, so its style applies directly.
+    */
+}
+
+/* If the toggle button is inside main-content as in the HTML, its position is relative to main-content.
+   The main-content's margin changes, so the button will move with it.
+   If the button needs to be fixed to the viewport at the top-left, even when the sidebar is collapsed,
+   then its `left` property might need to be adjusted by JS, or it should not be inside `main-content` if `main-content` shifts.
+
+   Revisiting the HTML, the toggle button is inside `main-content`.
+   So, when `main-content`'s `margin-left` becomes 0, the button will be at `10px` from the left edge of the viewport.
+   When `main-content`'s `margin-left` is `250px`, the button will be at `250px + 10px` from the left edge of the viewport.
+   This is probably not the desired behavior. The button should ideally remain in a fixed position relative to the viewport, or slide just out of view with the sidebar.
+
+   Let's adjust the button to be fixed relative to the viewport, and it can be part of the main-content div in HTML for structure.
+   Alternatively, place it outside both, or control its position strictly with JS.
+   For now, let's keep it simple and assume its current placement in `main-content` is for organizational purposes,
+   and its `position: fixed` will make it relative to the viewport.
+*/
+
+#sidebarToggle {
+    position: fixed; /* Relative to viewport */
+    top: 15px;
+    /* We will adjust the 'left' property using JavaScript when the sidebar collapses/expands */
+    left: 260px; /* Initial position next to the sidebar */
+    z-index: 100; /* Ensure it's above sidebar */
+    padding: 8px 12px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* No need for a separate .sidebar-collapsed version for the button if JS handles its 'left' position */
