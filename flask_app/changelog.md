@@ -24,3 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Sample admin-only section (`sample_module2`).
     - Dynamic display of navigation and user information based on role.
     - Automatic creation of a default 'admin' user for testing.
+
+### Fixed
+- Resolved `jinja2.exceptions.UndefinedError: 'login_form' is undefined` on the `/login` page by ensuring consistent variable naming for the login form object between the `login` route in `app/auth/routes.py` and the `auth/login.html` template (now consistently uses `login_form`).

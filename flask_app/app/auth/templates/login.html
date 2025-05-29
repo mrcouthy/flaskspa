@@ -6,7 +6,7 @@
     <h1>Sign In</h1>
     <div class="row">
         <div class="col-md-4">
-            {{ wtf.quick_form(form) }}
+            {{ wtf.quick_form(login_form) }}
         </div>
     </div>
     <p>New User? <a href="{{ url_for('auth.register') }}">Click to Register!</a></p>
